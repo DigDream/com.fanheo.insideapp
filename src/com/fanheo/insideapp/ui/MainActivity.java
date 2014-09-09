@@ -1,9 +1,10 @@
-package com.fanheo.insideapp;
+package com.fanheo.insideapp.ui;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import com.fanheo.insideapp.ExampleUtil;
+import com.fanheo.insideapp.util.ExampleUtil;
+import com.fanheo.insideapp.R;
 
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;

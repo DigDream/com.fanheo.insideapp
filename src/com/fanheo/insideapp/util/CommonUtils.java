@@ -1,4 +1,4 @@
-package com.fanheo.insideapp;
+package com.fanheo.insideapp.util;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

@@ -3,12 +3,15 @@ package com.fanheo.insideapp;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.fanheo.insideapp.util.ExampleUtil;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import cn.jpush.android.api.JPushInterface;
+
 
 /**
  * 自定义接收器
@@ -43,7 +46,7 @@ public class MyReceiver extends BroadcastReceiver {
             Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
             
         	//打开自定义的Activity
-        	Intent i = new Intent(context, LoginActivity.class);
+        	Intent i = new Intent(context, com.fanheo.insideapp.ui.LoginActivity.class);
         	i.putExtras(bundle);
         	//i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         	i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
@@ -79,16 +82,16 @@ public class MyReceiver extends BroadcastReceiver {
 	
 	//send msg to MainActivity
 	private void processCustomMessage(Context context, Bundle bundle) {
-		if (MainActivity.isForeground) {
+		if (com.fanheo.insideapp.ui.MainActivity.isForeground) {
 			String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
 			String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
-			Intent msgIntent = new Intent(MainActivity.MESSAGE_RECEIVED_ACTION);
-			msgIntent.putExtra(MainActivity.KEY_MESSAGE, message);
+			Intent msgIntent = new Intent(com.fanheo.insideapp.ui.MainActivity.MESSAGE_RECEIVED_ACTION);
+			msgIntent.putExtra(com.fanheo.insideapp.ui.MainActivity.KEY_MESSAGE, message);
 			if (!ExampleUtil.isEmpty(extras)) {
 				try {
 					JSONObject extraJson = new JSONObject(extras);
 					if (null != extraJson && extraJson.length() > 0) {
-						msgIntent.putExtra(MainActivity.KEY_EXTRAS, extras);
+						msgIntent.putExtra(com.fanheo.insideapp.ui.MainActivity.KEY_EXTRAS, extras);
 					}
 				} catch (JSONException e) {
 

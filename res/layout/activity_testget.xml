@@ -1,0 +1,63 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+      android:gravity="center_horizontal"
+    >
+    <LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+      android:gravity="center_horizontal">
+    <TextView
+        android:textColor="#FF0000"
+        android:textSize="16sp"
+       android:layout_marginTop="20dp"
+     android:gravity="center_horizontal"
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="获取数据完成后会显示在这里" />
+<Button
+    android:layout_marginTop="50dp"
+    android:id="@+id/bt1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="第一种"
+    android:onClick="method1"
+    />
+<Button
+    android:id="@+id/bt2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="第2种"
+    android:onClick="method2"
+    />
+<Button
+    android:id="@+id/bt3"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="第3种"
+      android:onClick="method3"
+    />
+<Button
+    android:id="@+id/bt4"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="第4种"
+      android:onClick="method4"
+    />
+
+  <TextView
+        android:textColor="#FF0000"
+        android:textSize="16sp"
+       android:layout_marginTop="20dp"
+     android:gravity="center_horizontal"
+        android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         />
+</LinearLayout>
+</ScrollView>

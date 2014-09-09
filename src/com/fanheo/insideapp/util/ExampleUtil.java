@@ -1,4 +1,4 @@
-package com.fanheo.insideapp;
+package com.fanheo.insideapp.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
