@@ -54,6 +54,8 @@
         <!-- For test only 测试设置 -->
        <activity android:name="com.fanheo.insideapp.SettingActivity" android:label="@string/app_name"></activity>
         <activity android:name="com.fanheo.insideapp.ui.LoginActivity" android:label="@string/app_name"></activity>
+        <activity android:name="com.fanheo.insideapp.ui.MainTabActivity" android:label="@string/app_name"></activity>
+        <activity android:name="com.fanheo.insideapp.ui.ListViewActivity" android:label="@string/app_name"></activity>
         <activity android:name="com.fanheo.insideapp.ui.GetTestActivity" android:label="@string/app_name"></activity>
         <!-- For test only 测试状态通知栏，需要打开的Activity -->
         <activity android:name="com.fanheo.insideapp.TestActivity" >

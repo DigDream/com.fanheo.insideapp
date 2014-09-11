@@ -118,6 +118,10 @@ public class LoginActivity extends Activity implements OnClickListener {
 		progress.setCanceledOnTouchOutside(false);
 		progress.show();
 		loginByAsyncHttpClientPost(name, password);  
+		Intent intent = new Intent();
+		intent.setClass(LoginActivity.this, ListViewActivity.class);
+		startActivity(intent);
+		finish();
 /*		String httpUrl = "http://10.0.2.2:8089/Gossip/LoginServlet";
 		System.out.println(httpUrl);
 		HttpPost request = new HttpPost(httpUrl);

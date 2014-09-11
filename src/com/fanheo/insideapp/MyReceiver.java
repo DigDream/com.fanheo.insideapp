@@ -82,16 +82,16 @@ public class MyReceiver extends BroadcastReceiver {
 	
 	//send msg to MainActivity
 	private void processCustomMessage(Context context, Bundle bundle) {
-		if (com.fanheo.insideapp.ui.MainActivity.isForeground) {
+		if (com.fanheo.insideapp.ui.MainTabActivity.isForeground) {
 			String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
 			String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
-			Intent msgIntent = new Intent(com.fanheo.insideapp.ui.MainActivity.MESSAGE_RECEIVED_ACTION);
-			msgIntent.putExtra(com.fanheo.insideapp.ui.MainActivity.KEY_MESSAGE, message);
+			Intent msgIntent = new Intent(com.fanheo.insideapp.ui.MainTabActivity.MESSAGE_RECEIVED_ACTION);
+			msgIntent.putExtra(com.fanheo.insideapp.ui.MainTabActivity.KEY_MESSAGE, message);
 			if (!ExampleUtil.isEmpty(extras)) {
 				try {
 					JSONObject extraJson = new JSONObject(extras);
 					if (null != extraJson && extraJson.length() > 0) {
-						msgIntent.putExtra(com.fanheo.insideapp.ui.MainActivity.KEY_EXTRAS, extras);
+						msgIntent.putExtra(com.fanheo.insideapp.ui.MainTabActivity.KEY_EXTRAS, extras);
 					}
 				} catch (JSONException e) {
 
