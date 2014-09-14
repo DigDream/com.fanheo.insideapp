@@ -20,6 +20,7 @@ import org.jsoup.select.Elements;
 
 import com.fanheo.insideapp.R;
 import com.fanheo.insideapp.adapter.ListViewAdapter;
+import com.fanheo.insideapp.data.UserPreferences;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -27,14 +28,18 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 public class ListViewActivity extends Activity {
 	private ListView listView;
@@ -48,7 +53,28 @@ public class ListViewActivity extends Activity {
 			"爱心：世界都有爱。", "鼠标：反应敏捷。", "音乐CD：酷我音乐。" };
 	Document doc;
 	private PullToRefreshListView mPullRefreshListView;
-
+	@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+ 		switch (item.getItemId()) {
+ 		case Menu.FIRST + 1:  
+ 			System.out.println("点击了注销按钮！");
+			//Toast.makeText(ListViewActivity.this, "存在网络", Toast.LENGTH_LONG).show();
+	 		UserPreferences preferences = new UserPreferences();
+			preferences.init(ListViewActivity.this);
+			preferences.setAutoLogin(true);
+			Intent intent = new Intent();
+			intent.setClass(ListViewActivity.this, LoginActivity.class);
+			startActivity(intent);
+			finish();
+			break;
+ 		}
+ 		return super.onOptionsItemSelected(item);
+ 	}
+    @Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+    	menu.add(Menu.NONE, Menu.FIRST + 1, 5, "注销");
+		return true;
+	}
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
