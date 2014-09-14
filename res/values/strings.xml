@@ -22,5 +22,7 @@
         <string name="toast_error_password_null">密码不能为空</string>
     <string name="toast_error_username_null">用户名不能为空</string>
     <string name="toast_error_comfirm_password">输入的两次密码不一致</string>
+    <string name="login_false">登录失败</string>
+    <string name="login_success">登录成功</string>
 
 </resources>

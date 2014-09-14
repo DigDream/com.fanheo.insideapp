@@ -66,11 +66,6 @@
             android:textColor="@color/base_color_text_white"
             android:textSize="@dimen/text_size_large" />
     </LinearLayout>
-     <TextView   
-        android:id="@+id/tv_result"  
-        android:layout_width="wrap_content"  
-        android:layout_height="wrap_content"  
-        android:layout_alignParentBottom="true"  
-        android:text="服务器返回的数据"/>  
+     
 
 </RelativeLayout>

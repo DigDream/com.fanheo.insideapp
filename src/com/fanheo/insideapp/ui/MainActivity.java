@@ -118,13 +118,20 @@ public class MainActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	/**
+	 * 跳转到下一个Activity
+	 */
 	public void toNextActivity() {
 		Intent intent = new Intent();
 		intent.setClass(MainActivity.this, LoginActivity.class);
 		startActivity(intent);
 		finish();
 	}
-
+	/**
+	 * 判断网络是否可用
+	 * @param context
+	 * @return
+	 */
 	public boolean isNetworkAvailable(Context context) {
 		if (context != null) {
 			ConnectivityManager mConnectivityManager = (ConnectivityManager) context
@@ -138,6 +145,9 @@ public class MainActivity extends Activity {
 		return false;
 	}
 
+	/**
+	 * 判断网络是否可用弹出对话框
+	 */
 	public void isNetworkAlertDialog() {
 		if (isNetworkAvailable(com.fanheo.insideapp.ui.MainActivity.this) == true) {
 			Toast.makeText(MainActivity.this, "存在网络", Toast.LENGTH_LONG).show();
@@ -165,6 +175,10 @@ public class MainActivity extends Activity {
 
 		}
 	}
+	/**
+	 * 跳转到设置网络界面
+	 * @param context
+	 */
 
 	public static void startNetworkSettingActivity(Context context) {
 		Intent intent = new Intent();

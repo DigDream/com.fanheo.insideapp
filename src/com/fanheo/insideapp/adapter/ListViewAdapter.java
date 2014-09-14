@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map; 
 
 import com.fanheo.insideapp.R;
+import com.fanheo.insideapp.ui.ListViewActivity;
 
 import android.app.AlertDialog; 
 import android.content.Context; 
@@ -44,7 +45,12 @@ public class ListViewAdapter extends BaseAdapter {
 	        hasChecked = new boolean[getCount()]; 
 	    } 
 
-	    public int getCount() { 
+	    public ListViewAdapter(ListViewActivity listViewActivity,
+				List<Map<String, String>> list, int simpleListItem2,
+				String[] strings, int[] is) {
+		}
+
+		public int getCount() { 
 	       
 	        return listItems.size(); 
 	    } 
