@@ -23,7 +23,9 @@ import com.fanheo.insideapp.adapter.ListViewAdapter;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ListView;
@@ -140,5 +142,32 @@ public class ListViewActivity extends Activity{
 		}));
     	
     }
+    @Override
+	public boolean dispatchKeyEvent(KeyEvent event) {
+	 
+	  if (event.getAction()==KeyEvent.ACTION_DOWN&&event.getKeyCode()==KeyEvent.KEYCODE_BACK) {
+	   new AlertDialog.Builder(this)
+	          .setCancelable(false)
+	          .setTitle("温馨提示")
+	          .setMessage("您确定要退出吗?")
+	          .setPositiveButton("确定",new DialogInterface.OnClickListener() {
+	              public void onClick(DialogInterface dialog, int which) { 
+	                 finish();
+	               
+	              }
+	          })
+	          .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+	              public void onClick(DialogInterface dialog, int which) { 
+	                
+	              }
+	          }).show();
+	   return true;
+	   //不知道返回true或是false有什么区别??
+	 }
+	 
+	 return super.dispatchKeyEvent(event);
+	 
+	}
+	
 
 }

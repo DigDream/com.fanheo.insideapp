@@ -19,8 +19,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.fanheo.insideapp.data.UserPreferences;
 import com.fanheo.insideapp.util.CommonUtils;
 import com.fanheo.insideapp.R;
+import com.fanheo.insideapp.UpdateManager;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -30,6 +32,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 	EditText et_username, et_password;
 	Button btn_login;
 	Toast mToast;
+	private String name;
+	private String password;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +41,28 @@ public class LoginActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.activity_login);
 		// 显示界面
 		init();
+		
+		//auto_login();
 		// 显示
 		initData();
+		UpdateManager manager = new UpdateManager(LoginActivity.this);
+		// 检查软件更新
+		manager.checkUpdate();
+	}
+
+	private void auto_login() {
+		boolean isNetConnected = CommonUtils.isNetworkAvailable(this);
+		if (!isNetConnected) {
+			ShowToast(R.string.network_tips);
+			return;
+		}
+		UserPreferences preferences = new UserPreferences();
+		preferences.init(LoginActivity.this);
+		if (preferences.getAutoLogin()) {
+			String autoname = preferences.getName();
+			String autopassword = preferences.getPWD();
+			loginByAsyncHttpClientPost(autoname, autopassword);
+		}
 	}
 
 	/**
@@ -95,8 +119,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 	 * 登录函数
 	 */
 	private void login() {
-		String name = et_username.getText().toString();
-		String password = et_password.getText().toString();
+		name = et_username.getText().toString();
+		password = et_password.getText().toString();
 
 		if (TextUtils.isEmpty(name)) {
 			ShowToast(R.string.toast_error_username_null);
@@ -165,6 +189,12 @@ public class LoginActivity extends Activity implements OnClickListener {
 			public void onSuccess(int statusCode, Header[] headers,
 					byte[] responseBody) {
 				if (statusCode == 200) {
+					UserPreferences preferences = new UserPreferences();
+					preferences.init(LoginActivity.this);
+					preferences.saveName(name);
+					preferences.savePWD(password);
+					// preferences设置自动登录。。
+					preferences.setAutoLogin(true);
 
 					ShowToast(R.string.login_success);
 					Intent intent = new Intent();

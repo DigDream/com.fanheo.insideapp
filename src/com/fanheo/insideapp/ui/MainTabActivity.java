@@ -14,14 +14,17 @@ import cn.jpush.android.api.BasicPushNotificationBuilder;
 import cn.jpush.android.api.InstrumentedActivity;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -218,6 +221,32 @@ public class MainTabActivity extends InstrumentedActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent event) {
+	 
+	  if (event.getAction()==KeyEvent.ACTION_DOWN&&event.getKeyCode()==KeyEvent.KEYCODE_BACK) {
+	   new AlertDialog.Builder(this)
+	          .setCancelable(false)
+	          .setTitle("温馨提示")
+	          .setMessage("您确定要退出吗?")
+	          .setPositiveButton("确定",new DialogInterface.OnClickListener() {
+	              public void onClick(DialogInterface dialog, int which) { 
+	                 finish();
+	              }
+	          })
+	          .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+	              public void onClick(DialogInterface dialog, int which) { 
+	                
+	              }
+	          }).show();
+	   return true;
+	   //不知道返回true或是false有什么区别??
+	 }
+	 
+	 return super.dispatchKeyEvent(event);
+	 
 	}
 	
 }

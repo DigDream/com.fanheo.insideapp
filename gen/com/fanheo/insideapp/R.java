@@ -1111,7 +1111,7 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f050016;
         public static final int action_menu_presenter=0x7f050017;
         public static final int action_mode_close_button=0x7f050024;
-        public static final int action_settings=0x7f05004c;
+        public static final int action_settings=0x7f05004d;
         public static final int activity_chooser_view_content=0x7f050025;
         public static final int always=0x7f05000b;
         public static final int beginning=0x7f050011;
@@ -1175,6 +1175,7 @@ containing a value of this type.
         public static final int titleItem=0x7f050049;
         public static final int top_action_bar=0x7f050020;
         public static final int up=0x7f050021;
+        public static final int update_progress=0x7f05004c;
         public static final int useLogo=0x7f050003;
         public static final int withText=0x7f05000c;
     }
@@ -1235,7 +1236,8 @@ containing a value of this type.
         public static final int activity_testget=0x7f03001c;
         public static final int fragment_main=0x7f03001d;
         public static final int list_item=0x7f03001e;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001f;
+        public static final int softupdate_progress=0x7f03001f;
+        public static final int support_simple_spinner_dropdown_item=0x7f030020;
     }
     public static final class menu {
         public static final int main=0x7f0c0000;
@@ -1299,6 +1301,13 @@ containing a value of this type.
         public static final int register=0x7f0a001b;
         public static final int register_txt1=0x7f0a001c;
         public static final int register_txt2=0x7f0a001d;
+        public static final int soft_update_cancel=0x7f0a002a;
+        public static final int soft_update_info=0x7f0a0026;
+        public static final int soft_update_later=0x7f0a0028;
+        public static final int soft_update_no=0x7f0a0024;
+        public static final int soft_update_title=0x7f0a0025;
+        public static final int soft_update_updatebtn=0x7f0a0027;
+        public static final int soft_updating=0x7f0a0029;
         public static final int style_hint=0x7f0a0014;
         public static final int tag_hint=0x7f0a0012;
         public static final int toast_error_comfirm_password=0x7f0a0021;
