@@ -1,0 +1,11 @@
+<info>
+    <city id="1" name="上海">
+        <weather>晴</weather>
+    </city>
+    <city id="2" name="北京">
+        <weather>雷阵雨</weather>
+    </city>
+    <city id="3" name="南京">
+        <weather>雨夹雪</weather>
+    </city>
+</info>

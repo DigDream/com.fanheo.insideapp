@@ -37,7 +37,6 @@ public class ListViewAdapter extends BaseAdapter {
 	            //public Button detail;        
 	     }   
 
-	     
 	    public ListViewAdapter(Context context, List<Map<String, Object>> listItems) { 
 	        this.context = context;          
 	        listContainer = LayoutInflater.from(context);   //创建视图容器并设置上下文 

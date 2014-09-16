@@ -174,7 +174,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	 */
 	public void loginByAsyncHttpClientPost(String userName, String userPass) {
 		AsyncHttpClient client = new AsyncHttpClient(); // 创建异步请求的客户端对象
-		String url = "http://192.168.1.103/mao10cms/index.php?m=Admin2&c=AndroidLogin&a=login"; // 定义请求的地址
+		String url = "http://192.168.1.199/mao10cms/index.php?m=Admin2&c=AndroidLogin&a=login"; // 定义请求的地址
 		// 创建请求参数的封装的对象
 		RequestParams params = new RequestParams();
 		params.put("user_name", userName); // 设置请求的参数名和参数值

@@ -1,6 +1,8 @@
 package com.fanheo.insideapp.ui;
 
 import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -11,16 +13,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
 import org.apache.http.util.ByteArrayBuffer;
 import org.apache.http.util.EncodingUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.xml.sax.InputSource;
+import org.xml.sax.XMLReader;
+import org.xmlpull.v1.XmlPullParser;
 
 import com.fanheo.insideapp.R;
 import com.fanheo.insideapp.adapter.ListViewAdapter;
 import com.fanheo.insideapp.data.UserPreferences;
+import com.fanheo.insideapp.util.OrderParseXmlService;
+import com.fanheo.insideapp.util.ParseXmlService;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -32,6 +42,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.format.DateUtils;
+import android.util.Log;
+import android.util.Xml;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -111,8 +123,10 @@ public class ListViewActivity extends Activity {
 		// android.R.layout.simple_list_item_1, mListItems);
 
 		// listView = (ListView)findViewById(R.id.pull_refresh_list);
-		listItems = getListItems();
+		File file = new File("/sdcard/ver.xml");	
+		listItems = getListItems(file);
 		listViewAdapter = new ListViewAdapter(this, listItems); // 创建适配器
+	        
 		// 这两个绑定方法用其一
 		// 方法一
 		// mPullRefreshListView.setAdapter(mAdapter);
@@ -160,7 +174,99 @@ public class ListViewActivity extends Activity {
 	/**
 	 * 初始化商品信息
 	 */
-	private List<Map<String, Object>> getListItems() {
+	private List<Map<String, Object>> getListItems(File file) {
+		if(file == null)
+            return null;
+        XmlPullParser parser = Xml.newPullParser();
+        List<Map<String, Object>> listItems = new ArrayList<Map<String, Object>>();
+		Map<String, Object> map = new HashMap<String, Object>();
+       /* List<Map<string,string>> list = null;
+        Map<string,string> map = null;*/
+        try
+        {
+            parser.setInput(new FileInputStream(file),"utf-8");
+             
+            int type = parser.getEventType();
+            while(type != XmlPullParser.END_DOCUMENT)
+            {
+                switch (type)
+                {
+                case XmlPullParser.START_TAG:
+                    if("info".equals(parser.getName()))
+                    {
+                    	listItems = new ArrayList<Map<String,Object>>();
+                    }else if("city".equals(parser.getName()))
+                    {
+                        map = new HashMap<String, Object>();
+                        map.put("title",parser.getAttributeValue(null,"name"));
+                        System.out.println(parser.getAttributeValue(null,"name"));
+                    }else if("weather".equals(parser.getName()))
+                    {
+                       
+                       // map.put("detail", parser.nextText()); // 物品详情
+                        String hash = parser.nextText();  
+                        map.put("info",hash);
+                        System.out.println(hash);
+                        map.put("image", imgeIDs[2]);
+                    }/*else if("temp".equals(parser.getName()))
+                    {
+                        map.put("temp",parser.nextText());
+                    }else if("wind".equals(parser.getName()))
+                    {
+                        map.put("wind",parser.nextText());
+                    }*/
+                    break;
+                case XmlPullParser.END_TAG:
+                    if("city".equals(parser.getName()))
+                    {
+                    	listItems.add(map);
+                        map = null;
+                    }
+                    break;
+                     
+                default:
+                    break;
+                }
+                type = parser.next();
+            }
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return listItems;
+		/*List<Map<String, Object>> listItems = new ArrayList<Map<String, Object>>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		// 把version.xml放到网络上，然后获取文件信息
+		InputStream inStream = OrderParseXmlService.class.getClassLoader().getResourceAsStream("ver.xml");
+		// 解析XML文件。 由于XML文件比较小，因此使用DOM方式进行解析
+		OrderParseXmlService service = new OrderParseXmlService();
+		try {
+			map = service.parseXml(inStream);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		for (int i = 0; i < goodsNames.length; i++) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			// 把version.xml放到网络上，然后获取文件信息
+			InputStream inStream = OrderParseXmlService.class.getClassLoader().getResourceAsStream("version.xml");
+			// 解析XML文件。 由于XML文件比较小，因此使用DOM方式进行解析
+			OrderParseXmlService service = new OrderParseXmlService();
+			try
+			{
+				mHashMap = service.parseXml(inStream);
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+			map.put("image", imgeIDs[i]); // 图片资源
+			map.put("title", "物品名称："); // 物品标题
+			map.put("info", goodsNames[i]); // 物品名称
+			map.put("detail", goodsDetails[i]); // 物品详情
+			listItems.add(map);
+		}
+		return listItems;*/
+	}
+	/*private List<Map<String, Object>> getListItems() {
 		List<Map<String, Object>> listItems = new ArrayList<Map<String, Object>>();
 		for (int i = 0; i < goodsNames.length; i++) {
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -171,7 +277,7 @@ public class ListViewActivity extends Activity {
 			listItems.add(map);
 		}
 		return listItems;
-	}
+	}*/
 
 	/**
 	 * 点击事件
