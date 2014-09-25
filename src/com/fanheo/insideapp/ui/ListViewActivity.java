@@ -115,13 +115,6 @@ public class ListViewActivity extends Activity implements
 					}
 				});
 
-		// mListItems = new LinkedList<String>();
-		// mListItems.addAll(Arrays.asList(mStrings));
-
-		// mAdapter = new ArrayAdapter<String>(this,
-		// android.R.layout.simple_list_item_1, mListItems);
-
-		// listView = (ListView)findViewById(R.id.pull_refresh_list);
 		File file = new File("/sdcard/ver.xml");
 		listItems = getListItems(file);
 		listViewAdapter = new ListViewAdapter(this, listItems); // ¥¥Ω®  ≈‰∆˜

@@ -14,7 +14,7 @@
         android:layout_height="fill_parent"  
         android:cacheColorHint="#00000000"  
         android:divider="#19000000"  
-        android:dividerHeight="4dp"
+        android:dividerHeight="1dp"
         android:focusable="false"  
         android:fadingEdge="none"  
         android:fastScrollEnabled="false"  

@@ -1323,7 +1323,7 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f050022;
         public static final int action_menu_presenter=0x7f050023;
         public static final int action_mode_close_button=0x7f050030;
-        public static final int action_settings=0x7f050060;
+        public static final int action_settings=0x7f050062;
         public static final int activity_chooser_view_content=0x7f050031;
         public static final int always=0x7f050017;
         public static final int beginning=0x7f05001d;
@@ -1333,7 +1333,7 @@ containing a value of this type.
         public static final int bt3=0x7f050053;
         public static final int bt4=0x7f050054;
         public static final int btn_login=0x7f05004c;
-        public static final int checkItem=0x7f050059;
+        public static final int checkItem=0x7f05005b;
         public static final int checkbox=0x7f050039;
         public static final int collapseActionView=0x7f050019;
         public static final int container=0x7f05004d;
@@ -1348,7 +1348,7 @@ containing a value of this type.
         public static final int et_username=0x7f05004a;
         public static final int expand_activities_button=0x7f050032;
         public static final int expanded_menu=0x7f050038;
-        public static final int fl_inner=0x7f05005a;
+        public static final int fl_inner=0x7f05005c;
         public static final int flip=0x7f050008;
         public static final int gridview=0x7f050009;
         public static final int home=0x7f050020;
@@ -1356,8 +1356,9 @@ containing a value of this type.
         public static final int icon=0x7f050036;
         public static final int ifRoom=0x7f050016;
         public static final int image=0x7f050033;
-        public static final int imageItem=0x7f050056;
-        public static final int infoItem=0x7f050058;
+        public static final int imageItem=0x7f050057;
+        public static final int infoItem=0x7f050059;
+        public static final int item_left=0x7f050056;
         public static final int iv_icon=0x7f050049;
         public static final int listMode=0x7f05000d;
         public static final int list_item=0x7f050035;
@@ -1373,10 +1374,10 @@ containing a value of this type.
         public static final int pullFromStart=0x7f050001;
         public static final int pullUpFromBottom=0x7f050006;
         public static final int pull_refresh_list=0x7f050048;
-        public static final int pull_to_refresh_image=0x7f05005b;
-        public static final int pull_to_refresh_progress=0x7f05005c;
-        public static final int pull_to_refresh_sub_text=0x7f05005e;
-        public static final int pull_to_refresh_text=0x7f05005d;
+        public static final int pull_to_refresh_image=0x7f05005d;
+        public static final int pull_to_refresh_progress=0x7f05005e;
+        public static final int pull_to_refresh_sub_text=0x7f050060;
+        public static final int pull_to_refresh_text=0x7f05005f;
         public static final int radio=0x7f05003b;
         public static final int rotate=0x7f050007;
         public static final int scrollview=0x7f05000b;
@@ -1400,10 +1401,11 @@ containing a value of this type.
         public static final int text=0x7f050050;
         public static final int text2=0x7f050055;
         public static final int title=0x7f050037;
-        public static final int titleItem=0x7f050057;
+        public static final int titleItem=0x7f050058;
         public static final int top_action_bar=0x7f05002c;
+        public static final int tv_time=0x7f05005a;
         public static final int up=0x7f05002d;
-        public static final int update_progress=0x7f05005f;
+        public static final int update_progress=0x7f050061;
         public static final int useLogo=0x7f05000f;
         public static final int webview=0x7f05000a;
         public static final int withText=0x7f050018;

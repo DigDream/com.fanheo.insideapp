@@ -5,34 +5,49 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:descendantFocusability="blocksDescendants" >
+<RelativeLayout
+        android:id="@+id/item_left"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp" >
 
-    <!-- 商品图片 -->
-    <ImageView
-        android:id="@+id/imageItem"  
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"  
-        android:layout_margin="5px"/>
-
-    <!-- 商品信息 -->
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"  
-        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/imageItem"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="5dp"
+             />
 
         <TextView
-            android:id="@+id/titleItem"  
+            android:id="@+id/titleItem"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"  
-            android:textColor="#FF0000"
-            android:textSize="25px"
-            />
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/imageItem"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
         <TextView
-            android:id="@+id/infoItem"  
+            android:id="@+id/infoItem"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"  
-            android:textColor="#FF0000"
-            android:textSize="22px"/>
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/imageItem"
+            android:layout_alignLeft="@id/titleItem"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textColor="#BEBEBE" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/titleItem"
+            android:textColor="#BEBEBE" />
+    </RelativeLayout>
 
     <!-- 购买和商品详情 -->
    <LinearLayout
