@@ -1520,6 +1520,8 @@ containing a value of this type.
         public static final int action_settings=0x7f070015;
         public static final int alias_hint=0x7f070019;
         public static final int app_name=0x7f070013;
+        public static final int button=0x7f070032;
+        public static final int error=0x7f070034;
         public static final int error_alias_empty=0x7f07001c;
         public static final int error_style_empty=0x7f07001b;
         public static final int error_tag_empty=0x7f070016;
@@ -1532,6 +1534,7 @@ containing a value of this type.
         public static final int login_success=0x7f070029;
         public static final int login_username_hint=0x7f07001d;
         public static final int network_tips=0x7f070024;
+        public static final int path=0x7f070031;
         /**  Just use standard Pull Down String when pulling up. These can be set for languages which require it 
  Just use standard Pull Down String when pulling up. These can be set for languages which require it 
          */
@@ -1544,6 +1547,7 @@ containing a value of this type.
         public static final int register=0x7f070021;
         public static final int register_txt1=0x7f070022;
         public static final int register_txt2=0x7f070023;
+        public static final int sdcarderror=0x7f070035;
         public static final int soft_update_cancel=0x7f070030;
         public static final int soft_update_info=0x7f07002c;
         public static final int soft_update_later=0x7f07002e;
@@ -1552,6 +1556,7 @@ containing a value of this type.
         public static final int soft_update_updatebtn=0x7f07002d;
         public static final int soft_updating=0x7f07002f;
         public static final int style_hint=0x7f07001a;
+        public static final int success=0x7f070033;
         public static final int tag_hint=0x7f070018;
         public static final int toast_error_comfirm_password=0x7f070027;
         public static final int toast_error_password_null=0x7f070025;

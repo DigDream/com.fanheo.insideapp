@@ -31,5 +31,10 @@
     <string name="soft_update_later">稍后更新</string>
     <string name="soft_updating">正在更新</string>
     <string name="soft_update_cancel">取消</string>
+        <string name="path">下载路径</string>
+    <string name="button">下载</string>
+    <string name="success">下载完成</string>
+    <string name="error">下载失败</string>
+    <string name="sdcarderror">SDCard不存在或者写保护</string>
 
 </resources>
