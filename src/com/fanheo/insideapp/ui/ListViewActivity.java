@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.Map;
 import org.apache.http.util.ByteArrayBuffer;
 import org.apache.http.util.EncodingUtils;
 import org.jsoup.nodes.Document;
+import org.xml.sax.InputSource;
 import org.xmlpull.v1.XmlPullParser;
 
 import android.app.Activity;
@@ -23,6 +25,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.Xml;
@@ -34,6 +38,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,8 +50,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
-public class ListViewActivity extends Activity implements
-		OnItemClickListener {
+public class ListViewActivity extends Activity implements OnItemClickListener {
 	private ListView listView;
 	private ListViewAdapter listViewAdapter;
 	private List<Map<String, Object>> listItems;
@@ -58,7 +62,7 @@ public class ListViewActivity extends Activity implements
 			"爱心：世界都有爱。", "鼠标：反应敏捷。", "音乐CD：酷我音乐。" };
 	Document doc;
 	private PullToRefreshListView mPullRefreshListView;
-
+	private static final String queryString = "http://182.92.180.94/ver.xml";
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -89,7 +93,7 @@ public class ListViewActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		final View view = View.inflate(this, R.layout.activity_listview, null);
 		setContentView(view);
-		
+
 		// loadData();
 		mPullRefreshListView = (PullToRefreshListView) findViewById(R.id.pull_refresh_list);
 		// Set a listener to be invoked when the list should be refreshed.
@@ -114,54 +118,77 @@ public class ListViewActivity extends Activity implements
 						new GetDataTask().execute();
 					}
 				});
-
-		File file = new File("/sdcard/ver.xml");
-		listItems = getListItems(file);
-		listViewAdapter = new ListViewAdapter(this, listItems); // 创建适配器
+		new Thread() {
+			@Override
+			public void run() {
+				super.run();
+				try {
+					listItems = getListItems(queryString);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				handler.sendEmptyMessage(0);
+			}
+		}.start();
 
 		// 这两个绑定方法用其一
 		// 方法一
 		// mPullRefreshListView.setAdapter(mAdapter);
 		// 方法二
-		
-		ListView actualListView = mPullRefreshListView.getRefreshableView();
-		registerForContextMenu(actualListView); 
-		actualListView.setAdapter(listViewAdapter);
-		actualListView.setOnItemClickListener(new OnItemClickListener() {
-	
 
-			private Cursor cursor1;
-
-			public void onItemClick(AdapterView<?> arg0, View arg1,
-					int position, long id) {
-				
-				
-			   
-				Toast.makeText(ListViewActivity.this, "test", Toast.LENGTH_LONG)
-						.show();
-				Intent intent = new Intent(getApplicationContext(),
-						OrderInfoActivity.class);
-			    //intent.putExtra("itemInfo", title);
-				ListViewActivity.this.startActivity(intent);
-			}
-
-		});
-		actualListView
-				.setOnItemLongClickListener(new OnItemLongClickListener() {
-					@Override
-					public boolean onItemLongClick(AdapterView<?> arg0,
-							View arg1, int arg2, long arg3) {
-						// When clicked, show a toast with the TextView text
-						
-						Toast.makeText(ListViewActivity.this, "您不小心长按了一下",
-								Toast.LENGTH_LONG).show();
-						return false;
-					}
-				});
 		// listView.setAdapter(listViewAdapter);
 	}
 
+	private Handler handler = new Handler() {
+
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case 0:
+				listViewAdapter = new ListViewAdapter(ListViewActivity.this,
+						listItems); // 创建适配器
+				ListView actualListView = mPullRefreshListView
+						.getRefreshableView();
+				registerForContextMenu(actualListView);
+				actualListView.setAdapter(listViewAdapter);
+				actualListView
+						.setOnItemClickListener(new OnItemClickListener() {
+
+							private Cursor cursor1;
+
+							public void onItemClick(AdapterView<?> arg0,
+									View arg1, int position, long id) {
+
+								Toast.makeText(ListViewActivity.this, "test",
+										Toast.LENGTH_LONG).show();
+								Intent intent = new Intent(
+										getApplicationContext(),
+										OrderInfoActivity.class);
+								// intent.putExtra("itemInfo", title);
+								ListViewActivity.this.startActivity(intent);
+							}
+
+						});
+				actualListView
+						.setOnItemLongClickListener(new OnItemLongClickListener() {
+							@Override
+							public boolean onItemLongClick(AdapterView<?> arg0,
+									View arg1, int arg2, long arg3) {
+								// When clicked, show a toast with the TextView
+								// text
+
+								Toast.makeText(ListViewActivity.this,
+										"您不小心长按了一下", Toast.LENGTH_LONG).show();
+								return false;
+							}
+						});
+				break;
+			}
+		};
+	};
+
 	private class GetDataTask extends AsyncTask<Void, Void, String> {
+
+		
 
 		// 后台处理部分
 		@Override
@@ -170,6 +197,11 @@ public class ListViewActivity extends Activity implements
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
+			}
+			try {
+				listItems = getListItems(queryString);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 			String str = "Added after refresh...I add";
 			return str;
@@ -181,14 +213,20 @@ public class ListViewActivity extends Activity implements
 		protected void onPostExecute(String result) {
 			// 在头部增加新添内容
 			// mListItems.addFirst(result);
-			Map<String, Object> map = new HashMap<String, Object>();
+			/*Map<String, Object> map = new HashMap<String, Object>();
 			map.put("image", imgeIDs[1]); // 图片资源
 			map.put("title", "物品名称："); // 物品标题
 			map.put("info", goodsNames[1]); // 物品名称
 			map.put("detail", goodsDetails[1]); // 物品详情
-			listItems.add(map);
+			listItems.add(map);*/
 			// 通知程序数据集已经改变，如果不做通知，那么将不会刷新mListItems的集合
-			// mAdapter.notifyDataSetChanged();
+			listViewAdapter = new ListViewAdapter(ListViewActivity.this,
+					listItems); 
+			ListView actualListView = mPullRefreshListView
+					.getRefreshableView();
+			registerForContextMenu(actualListView);
+			actualListView.setAdapter(listViewAdapter);
+			listViewAdapter.notifyDataSetChanged();
 			// Call onRefreshComplete when the list has been refreshed.
 			mPullRefreshListView.onRefreshComplete();
 
@@ -198,10 +236,14 @@ public class ListViewActivity extends Activity implements
 
 	/**
 	 * 初始化订单信息
+	 * 
+	 * @throws MalformedURLException
 	 */
-	private List<Map<String, Object>> getListItems(File file) {
-		if (file == null)
-			return null;
+	private List<Map<String, Object>> getListItems(String queryString)
+			throws Exception {
+		URL url = new URL(queryString);
+		InputStream inputStream = url.openStream();
+
 		XmlPullParser parser = Xml.newPullParser();
 		List<Map<String, Object>> listItems = new ArrayList<Map<String, Object>>();
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -209,8 +251,8 @@ public class ListViewActivity extends Activity implements
 		 * List<Map<string,string>> list = null; Map<string,string> map = null;
 		 */
 		try {
-			parser.setInput(new FileInputStream(file), "utf-8");
-
+			// parser.setInput(new FileInputStream(file), "utf-8");
+			parser.setInput(inputStream, "utf-8");
 			int type = parser.getEventType();
 			while (type != XmlPullParser.END_DOCUMENT) {
 				switch (type) {
@@ -238,6 +280,7 @@ public class ListViewActivity extends Activity implements
 					break;
 				case XmlPullParser.END_TAG:
 					if ("city".equals(parser.getName())) {
+						System.out.println(listItems.size());
 						listItems.add(map);
 						map = null;
 					}
@@ -252,27 +295,6 @@ public class ListViewActivity extends Activity implements
 			e.printStackTrace();
 		}
 		return listItems;
-		/*
-		 * List<Map<String, Object>> listItems = new ArrayList<Map<String,
-		 * Object>>(); Map<String, Object> map = new HashMap<String, Object>();
-		 * // 把version.xml放到网络上，然后获取文件信息 InputStream inStream =
-		 * OrderParseXmlService
-		 * .class.getClassLoader().getResourceAsStream("ver.xml"); // 解析XML文件。
-		 * 由于XML文件比较小，因此使用DOM方式进行解析 OrderParseXmlService service = new
-		 * OrderParseXmlService(); try { map = service.parseXml(inStream); }
-		 * catch (Exception e) { e.printStackTrace(); } for (int i = 0; i <
-		 * goodsNames.length; i++) { Map<String, Object> map = new
-		 * HashMap<String, Object>(); // 把version.xml放到网络上，然后获取文件信息 InputStream
-		 * inStream =
-		 * OrderParseXmlService.class.getClassLoader().getResourceAsStream
-		 * ("version.xml"); // 解析XML文件。 由于XML文件比较小，因此使用DOM方式进行解析
-		 * OrderParseXmlService service = new OrderParseXmlService(); try {
-		 * mHashMap = service.parseXml(inStream); } catch (Exception e) {
-		 * e.printStackTrace(); } map.put("image", imgeIDs[i]); // 图片资源
-		 * map.put("title", "物品名称："); // 物品标题 map.put("info", goodsNames[i]); //
-		 * 物品名称 map.put("detail", goodsDetails[i]); // 物品详情 listItems.add(map);
-		 * } return listItems;
-		 */
 	}
 
 	/*
@@ -319,24 +341,6 @@ public class ListViewActivity extends Activity implements
 	/**
      * 
      */
-	/*
-	 * public void loadData(){ try { doc = Jsoup.parse(new
-	 * URL("http://www.cnbeta.com"), 5000); } catch (MalformedURLException e1) {
-	 * e1.printStackTrace(); } catch (IOException e1) { e1.printStackTrace(); }
-	 * 
-	 * List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-	 * Elements es = doc.getElementsByClass("topic"); for (Element e : es) {
-	 * Map<String, String> map = new HashMap<String, String>(); map.put("title",
-	 * e.getElementsByTag("a").text()); map.put("href", "http://www.cnbeta.com"
-	 * + e.getElementsByTag("a").attr("href")); list.add(map); }
-	 * 
-	 * //ListView listView = (ListView) findViewById(R.id.list_orders);
-	 * listView.setAdapter(new SimpleAdapter(this, list,
-	 * android.R.layout.simple_list_item_2, new String[] { "title","href" }, new
-	 * int[] { android.R.id.text1,android.R.id.text2 }));
-	 * 
-	 * }
-	 */
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent event) {
 

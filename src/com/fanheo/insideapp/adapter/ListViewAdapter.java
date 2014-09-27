@@ -41,7 +41,6 @@ public class ListViewAdapter extends BaseAdapter {
 	        this.context = context;          
 	        listContainer = LayoutInflater.from(context);   //创建视图容器并设置上下文 
 	        this.listItems = listItems; 
-	        hasChecked = new boolean[getCount()]; 
 	    } 
 
 	    public ListViewAdapter(ListViewActivity listViewActivity,
