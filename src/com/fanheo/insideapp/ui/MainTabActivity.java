@@ -43,7 +43,7 @@ public class MainTabActivity extends InstrumentedActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		String alias = "test";
+		String alias = "guodong";
 		if (TextUtils.isEmpty(alias)) {
 			Toast.makeText(MainTabActivity.this,R.string.error_alias_empty, Toast.LENGTH_SHORT).show();
 			return;

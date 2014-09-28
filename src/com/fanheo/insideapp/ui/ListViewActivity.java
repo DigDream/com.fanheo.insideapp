@@ -20,6 +20,7 @@ import org.xmlpull.v1.XmlPullParser;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -62,7 +63,7 @@ public class ListViewActivity extends Activity implements OnItemClickListener {
 			"爱心：世界都有爱。", "鼠标：反应敏捷。", "音乐CD：酷我音乐。" };
 	Document doc;
 	private PullToRefreshListView mPullRefreshListView;
-	private static final String queryString = "http://182.92.180.94/ver.xml";
+	private static final String queryString = "http://fanheo.com:88/index.php/admin2-android-xml_order";
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -157,13 +158,20 @@ public class ListViewActivity extends Activity implements OnItemClickListener {
 
 							public void onItemClick(AdapterView<?> arg0,
 									View arg1, int position, long id) {
-
+								
 								Toast.makeText(ListViewActivity.this, "test",
 										Toast.LENGTH_LONG).show();
+								
 								Intent intent = new Intent(
 										getApplicationContext(),
 										OrderInfoActivity.class);
-								// intent.putExtra("itemInfo", title);
+								Bundle bundle = new Bundle();
+								bundle.putString("name",
+										"This is from MainActivity!" + ((ListViewAdapter) arg0.getAdapter()).getTitle(position)+arg1
+												+ "\n" + position + "\n" + id);
+								intent.putExtras(bundle); // it.putExtra(“test”,
+															// "shuju”);
+								// intent.putExtra("itemInfo", ints);
 								ListViewActivity.this.startActivity(intent);
 							}
 
@@ -188,8 +196,6 @@ public class ListViewActivity extends Activity implements OnItemClickListener {
 
 	private class GetDataTask extends AsyncTask<Void, Void, String> {
 
-		
-
 		// 后台处理部分
 		@Override
 		protected String doInBackground(Void... params) {
@@ -213,17 +219,16 @@ public class ListViewActivity extends Activity implements OnItemClickListener {
 		protected void onPostExecute(String result) {
 			// 在头部增加新添内容
 			// mListItems.addFirst(result);
-			/*Map<String, Object> map = new HashMap<String, Object>();
-			map.put("image", imgeIDs[1]); // 图片资源
-			map.put("title", "物品名称："); // 物品标题
-			map.put("info", goodsNames[1]); // 物品名称
-			map.put("detail", goodsDetails[1]); // 物品详情
-			listItems.add(map);*/
+			/*
+			 * Map<String, Object> map = new HashMap<String, Object>();
+			 * map.put("image", imgeIDs[1]); // 图片资源 map.put("title", "物品名称：");
+			 * // 物品标题 map.put("info", goodsNames[1]); // 物品名称 map.put("detail",
+			 * goodsDetails[1]); // 物品详情 listItems.add(map);
+			 */
 			// 通知程序数据集已经改变，如果不做通知，那么将不会刷新mListItems的集合
 			listViewAdapter = new ListViewAdapter(ListViewActivity.this,
-					listItems); 
-			ListView actualListView = mPullRefreshListView
-					.getRefreshableView();
+					listItems);
+			ListView actualListView = mPullRefreshListView.getRefreshableView();
 			registerForContextMenu(actualListView);
 			actualListView.setAdapter(listViewAdapter);
 			listViewAdapter.notifyDataSetChanged();
@@ -244,55 +249,79 @@ public class ListViewActivity extends Activity implements OnItemClickListener {
 		URL url = new URL(queryString);
 		InputStream inputStream = url.openStream();
 
-		XmlPullParser parser = Xml.newPullParser();
-		List<Map<String, Object>> listItems = new ArrayList<Map<String, Object>>();
-		Map<String, Object> map = new HashMap<String, Object>();
-		/*
-		 * List<Map<string,string>> list = null; Map<string,string> map = null;
-		 */
-		try {
-			// parser.setInput(new FileInputStream(file), "utf-8");
-			parser.setInput(inputStream, "utf-8");
-			int type = parser.getEventType();
-			while (type != XmlPullParser.END_DOCUMENT) {
-				switch (type) {
-				case XmlPullParser.START_TAG:
-					if ("info".equals(parser.getName())) {
-						listItems = new ArrayList<Map<String, Object>>();
-					} else if ("city".equals(parser.getName())) {
-						map = new HashMap<String, Object>();
-						map.put("title", parser.getAttributeValue(null, "name"));
-						System.out.println(parser.getAttributeValue(null,
-								"name"));
-					} else if ("weather".equals(parser.getName())) {
+		if (inputStream == null) {
+			final ProgressDialog progress = new ProgressDialog(
+					ListViewActivity.this);
+			progress.setMessage("获取数据失败。。");
+			progress.setCanceledOnTouchOutside(false);
+			progress.show();
+			
+		} else {
+			XmlPullParser parser = Xml.newPullParser();
+			List<Map<String, Object>> listItems = new ArrayList<Map<String, Object>>();
+			Map<String, Object> map = new HashMap<String, Object>();
+			/*
+			 * List<Map<string,string>> list = null; Map<string,string> map =
+			 * null;
+			 */
+			try {
+				// parser.setInput(new FileInputStream(file), "utf-8");
+				parser.setInput(inputStream, "utf-8");
+				int type = parser.getEventType();
+				while (type != XmlPullParser.END_DOCUMENT) {
+					switch (type) {
+					case XmlPullParser.START_TAG:
+						if ("info".equals(parser.getName())) {
+							listItems = new ArrayList<Map<String, Object>>();
+						} else if ("order".equals(parser.getName())) {
+							map = new HashMap<String, Object>();
+							// map.put("title", parser.getAttributeValue(null,
+							// "name"));
+							/*
+							 * System.out.println(parser.getAttributeValue(null,
+							 * "name"));
+							 */
+						} else if ("number".equals(parser.getName())) {
+							// map = new HashMap<String, Object>();
+							// map.put("title", parser.getAttributeValue(null,
+							// "name"));
+							// map.put("detail", parser.nextText()); // 物品详情
+							String hash = parser.nextText();
+							map.put("title", hash);
+							System.out.println(hash);
+							map.put("image", imgeIDs[2]);
+						} else if ("user_name".equals(parser.getName())) {
+							// map = new HashMap<String, Object>();
+							// map.put("title", parser.getAttributeValue(null,
+							// "name"));
+							// map.put("detail", parser.nextText()); // 物品详情
+							String hash = parser.nextText();
+							map.put("info", hash);
+							System.out.println(hash);
+							map.put("image", imgeIDs[2]);
+						}/*
+						 * else if("temp".equals(parser.getName())) {
+						 * map.put("temp",parser.nextText()); }else
+						 * if("wind".equals(parser.getName())) {
+						 * map.put("wind",parser.nextText()); }
+						 */
+						break;
+					case XmlPullParser.END_TAG:
+						if ("order".equals(parser.getName())) {
+							System.out.println(listItems.size());
+							listItems.add(map);
+							map = null;
+						}
+						break;
 
-						// map.put("detail", parser.nextText()); // 物品详情
-						String hash = parser.nextText();
-						map.put("info", hash);
-						System.out.println(hash);
-						map.put("image", imgeIDs[2]);
-					}/*
-					 * else if("temp".equals(parser.getName())) {
-					 * map.put("temp",parser.nextText()); }else
-					 * if("wind".equals(parser.getName())) {
-					 * map.put("wind",parser.nextText()); }
-					 */
-					break;
-				case XmlPullParser.END_TAG:
-					if ("city".equals(parser.getName())) {
-						System.out.println(listItems.size());
-						listItems.add(map);
-						map = null;
+					default:
+						break;
 					}
-					break;
-
-				default:
-					break;
+					type = parser.next();
 				}
-				type = parser.next();
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return listItems;
 	}
