@@ -44,13 +44,12 @@ public class ListViewAdapter extends BaseAdapter {
 		this.listItems = listItems;
 	}
 
-	public ListViewAdapter(ListViewActivity listViewActivity,
-			List<Map<String, String>> list, int simpleListItem2,
-			String[] strings, int[] is) {
-	}
-
 	public int getCount() {
-		return listItems.size();
+		if(listItems !=null){
+		return listItems.size();}
+		else {
+			return 100;
+		}
 	}
 	public String getTitle(int arg0){
 		return (String) listItems.get(arg0)

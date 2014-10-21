@@ -11,13 +11,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.http.util.ByteArrayBuffer;
 import org.apache.http.util.EncodingUtils;
 import org.jsoup.nodes.Document;
 import org.xml.sax.InputSource;
 import org.xmlpull.v1.XmlPullParser;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -43,7 +42,6 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.fanheo.insideapp.R;
 import com.fanheo.insideapp.adapter.ListViewAdapter;
 import com.fanheo.insideapp.data.UserPreferences;
@@ -63,7 +61,7 @@ public class ListViewActivity extends Activity implements OnItemClickListener {
 			"爱心：世界都有爱。", "鼠标：反应敏捷。", "音乐CD：酷我音乐。" };
 	Document doc;
 	private PullToRefreshListView mPullRefreshListView;
-	private static final String queryString = "http://fanheo.com:88/index.php/admin2-android-xml_order";
+	private static final String queryString = "http://fanheo.com/index.php/admin2-android-xml_order?key=fanheo014789014789014789&store=35";
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -94,7 +92,6 @@ public class ListViewActivity extends Activity implements OnItemClickListener {
 		super.onCreate(savedInstanceState);
 		final View view = View.inflate(this, R.layout.activity_listview, null);
 		setContentView(view);
-
 		// loadData();
 		mPullRefreshListView = (PullToRefreshListView) findViewById(R.id.pull_refresh_list);
 		// Set a listener to be invoked when the list should be refreshed.
@@ -142,6 +139,7 @@ public class ListViewActivity extends Activity implements OnItemClickListener {
 
 	private Handler handler = new Handler() {
 
+		@SuppressLint("HandlerLeak")
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case 0:

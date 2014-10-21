@@ -54,10 +54,10 @@ public class LoginActivity extends Activity implements OnClickListener {
 		
 		//auto_login();
 		// 显示
-		initData();
-		UpdateManager manager = new UpdateManager(LoginActivity.this);
+		//initData();
+		//UpdateManager manager = new UpdateManager(LoginActivity.this);
 		// 检查软件更新
-		manager.checkUpdate();
+		//manager.checkUpdate();
 	}
 
 	private void auto_login() {
@@ -112,7 +112,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				if (mToast == null) {
 					mToast = Toast.makeText(
 							LoginActivity.this.getApplicationContext(), resId,
@@ -185,7 +184,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	 */
 	public void loginByAsyncHttpClientPost(String userName, String userPass) {
 		AsyncHttpClient client = new AsyncHttpClient(); // 创建异步请求的客户端对象
-		String url = "http://fanheo.com:88/index.php/admin2-AndroidLogin-login"; // 定义请求的地址
+		String url = "http://fanheo.com/index.php/admin2-AndroidLogin-login"; // 定义请求的地址
 		// 创建请求参数的封装的对象
 		RequestParams params = new RequestParams();
 		params.put("user_name", userName); // 设置请求的参数名和参数值
@@ -221,7 +220,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 			private void setAliasByAsyncHttpClientPost(String name) {
 				AsyncHttpClient client = new AsyncHttpClient(); // 创建异步请求的客户端对象
-				String url = "http://192.168.1.199/mao10cms/index.php?m=Admin2&c=AndroidLogin&a=login"; // 定义请求的地址
+				String url = "http://fanheo.com/index.php/admin2-AndroidLogin-login"; // 定义请求的地址
 				// 创建请求参数的封装的对象
 				RequestParams params = new RequestParams();
 				params.put("aliasname", name); // 设置请求的参数名和参数值
@@ -426,7 +425,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		// 访问服务器端 获取json数据
 		// 创建客户端对象
 		AsyncHttpClient client = new AsyncHttpClient();
-		String url = "http://192.168.1.104/fanheo_home/index.php/Admin2-AndroidLogin-Login.html";
+		String url = "http://fanheo.com/index.php/admin2-AndroidLogin-login";
 		client.get(url, new JsonHttpResponseHandler() {
 			// 返回JSONArray对象 | JSONObject对象
 			@Override
